@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edulytical — Bespoke data analysis for schools</title>
+  <meta name="description" content="You bring the data, we build the answers: custom dashboards for schools, built from your data for your organization.">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b82f6'/%3E%3Crect x='7' y='17' width='3.5' height='8' rx='1.5' fill='white'/%3E%3Crect x='12.5' y='11' width='3.5' height='14' rx='1.5' fill='white'/%3E%3Crect x='18' y='14' width='3.5' height='11' rx='1.5' fill='white'/%3E%3Crect x='23.5' y='7' width='3.5' height='18' rx='1.5' fill='white'/%3E%3C/svg%3E">
+  <script>
+    // Apply the saved or system theme before paint to avoid a flash.
+    (function () {
+      var t = null
+      try { t = localStorage.getItem('edulytical-theme') } catch (e) {}
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark')
+      document.documentElement.classList.add('js')
+    })()
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Lucide icons (ISC licence), as a sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+      <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+      <symbol id="i-trending" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></symbol>
+      <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Edulytical home">
+        <span class="logo logo-sm" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">Edulytical</span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#how">How it works</a>
+        <a href="#examples">Examples</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <svg class="icon icon-moon"><use href="#i-moon"/></svg>
+          <svg class="icon icon-sun"><use href="#i-sun"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+      <div class="container hero-inner">
+        <div class="logo logo-lg float glow-logo rise" style="--i:0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <h1 class="hero-title rise" style="--i:1">You bring the data.<br>We build the answers.</h1>
+        <p class="hero-sub rise" style="--i:2">Custom dashboards built from your data for your organization.</p>
+        <div class="rise" style="--i:3">
+          <a class="btn btn-primary btn-lg shine" href="https://demo.edulytical.app">
+            Enter the demo
+            <svg class="icon"><use href="#i-arrow-right"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container page">
+      <!-- How it works -->
+      <section id="how" class="section reveal">
+        <div class="section-heading">
+          <h2 class="section-label">How it works</h2>
+        </div>
+        <div class="grid stats-3">
+          <div class="card card-pad step lift">
+            <span class="step-num">1</span>
+            <svg class="icon feature-icon"><use href="#i-upload"/></svg>
+            <h3 class="feature-title">You share your data</h3>
+            <p class="body-muted">Exports, spreadsheets or system access. Whatever you have.</p>
+          </div>
+          <div class="card card-pad step lift">
+            <span class="step-num">2</span>
+            <svg class="icon feature-icon"><use href="#i-wrench"/></svg>
+            <h3 class="feature-title">We build it for you</h3>
+            <p class="body-muted">Dashboards and automations designed around your goals.</p>
+          </div>
+          <div class="card card-pad step lift">
+            <span class="step-num">3</span>
+            <svg class="icon feature-icon"><use href="#i-check"/></svg>
+            <h3 class="feature-title">Your team gets answers</h3>
+            <p class="body-muted">Clear numbers everyone can read at a glance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Examples -->
+      <section id="examples" class="section">
+        <div class="section-heading reveal">
+          <h2 class="section-label">Examples</h2>
+        </div>
+
+        <div class="features">
+          <!-- Key figures -->
+          <article class="feature reveal">
+            <div class="grid stat-quad">
+            <div class="card stat lift">
+              <p class="stat-label">Daily attendance</p>
+              <p class="hero-num"><span class="count" data-to="94.6" data-decimals="1" data-suffix="%">94.6%</span></p>
+              <p class="context">Goal 95%</p>
+            </div>
+            <div class="card stat lift">
+              <p class="stat-label">On track in reading</p>
+              <p class="hero-num"><span class="count" data-to="72" data-suffix="%">72%</span></p>
+              <p class="context"><span class="text-primary tabular">+9 pts</span> since fall</p>
+            </div>
+            <div class="card stat lift">
+              <p class="stat-label">Grant funds remaining</p>
+              <p class="hero-num money-wrap"><span class="count" data-to="418250" data-prefix="$" data-confetti="money">$418,250</span></p>
+              <p class="context">Due June 30</p>
+            </div>
+            <div class="card stat lift">
+              <p class="stat-label">Chronically absent</p>
+              <p class="hero-num text-error"><span class="count" data-to="38">38</span></p>
+              <p class="context">Missed 10%+ of days</p>
+            </div>
+            </div>
+          </article>
+
+          <!-- Testing -->
+          <article class="feature reveal">
+            <div class="card card-pad">
+              <div class="feature-copy">
+                <h3 class="feature-title">Results by grade, at a glance</h3>
+                <p class="body-muted">Any assessment, broken down the way you need it.</p>
+              </div>
+              <div class="mini">
+                <div class="mini-head">
+                  <p class="stat-label">Spring math benchmark</p>
+                </div>
+                <div class="levels">
+                  <div class="level-row"><span class="grade-name">3</span><div class="stack"><span class="seg lv1 grow" style="--w:12%"></span><span class="seg lv2 grow" style="--w:22%"></span><span class="seg lv3 grow" style="--w:44%"></span><span class="seg lv4 grow" style="--w:22%"></span></div><span class="grade-num tabular">66%</span></div>
+                  <div class="level-row"><span class="grade-name">4</span><div class="stack"><span class="seg lv1 grow" style="--w:15%"></span><span class="seg lv2 grow" style="--w:24%"></span><span class="seg lv3 grow" style="--w:41%"></span><span class="seg lv4 grow" style="--w:20%"></span></div><span class="grade-num tabular">61%</span></div>
+                  <div class="level-row"><span class="grade-name">5</span><div class="stack"><span class="seg lv1 grow" style="--w:9%"></span><span class="seg lv2 grow" style="--w:19%"></span><span class="seg lv3 grow" style="--w:45%"></span><span class="seg lv4 grow" style="--w:27%"></span></div><span class="grade-num tabular">72%</span></div>
+                  <div class="level-row"><span class="grade-name">6</span><div class="stack"><span class="seg lv1 grow" style="--w:24%"></span><span class="seg lv2 grow" style="--w:31%"></span><span class="seg lv3 grow" style="--w:33%"></span><span class="seg lv4 grow" style="--w:12%"></span></div><span class="grade-num tabular"><span class="ping" aria-hidden="true"></span>45%</span></div>
+                  <div class="level-row"><span class="grade-name">7</span><div class="stack"><span class="seg lv1 grow" style="--w:17%"></span><span class="seg lv2 grow" style="--w:27%"></span><span class="seg lv3 grow" style="--w:39%"></span><span class="seg lv4 grow" style="--w:17%"></span></div><span class="grade-num tabular">56%</span></div>
+                </div>
+                <div class="legend legend-tight">
+                  <span><i class="key lv1"></i>Below</span>
+                  <span><i class="key lv2"></i>Approaching</span>
+                  <span><i class="key lv3"></i>Meets</span>
+                  <span><i class="key lv4"></i>Exceeds</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Trends -->
+          <article class="feature reveal" data-feature="timeline">
+            <div class="card card-pad">
+              <div class="feature-copy">
+                <h3 class="feature-title">This year against last</h3>
+                <p class="body-muted">Any measure, tracked month by month against your goals.</p>
+              </div>
+              <div class="mini">
+                <div class="mini-head">
+                  <p class="stat-label">Attendance rate</p>
+                  <span class="badge"><svg class="icon-xs"><use href="#i-trending"/></svg>+2.5 pts</span>
+                </div>
+                <div class="chart" id="trend-chart" role="img" aria-label="Attendance this year dipped to 92.4% in December, recovered after a January campaign, and passed the 95% goal in March. Last year ended at 93.4%."></div>
+                <div class="legend legend-tight">
+                  <span><i class="key key-base"></i>This year</span>
+                  <span><i class="key key-weight"></i>Last year</span>
+                  <span><i class="key key-dash"></i>Goal</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Goals -->
+          <article class="feature reveal">
+            <div class="card card-pad">
+              <div class="feature-copy">
+                <h3 class="feature-title">Goals and targets</h3>
+                <p class="body-muted">Every target, and how close you are.</p>
+              </div>
+              <div class="mini">
+                <div class="mini-head">
+                  <p class="stat-label">2026–27 targets</p>
+                  <span class="badge pop-target"><svg class="icon-xs"><use href="#i-sparkles"/></svg>1 of 4 reached</span>
+                </div>
+                <div class="rings">
+                  <div class="ring-item pop-chip" style="--i:0">
+                    <div class="ring ring-success" style="--p:1">
+                      <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="26"/><circle class="ring-fill" cx="32" cy="32" r="26"/></svg>
+                      <span class="ring-value tabular">104%</span>
+                    </div>
+                    <p class="ring-label">Enrollment <svg class="icon-xs trophy"><use href="#i-trophy"/></svg></p>
+                    <p class="context">416 of 400</p>
+                  </div>
+                  <div class="ring-item pop-chip" style="--i:1">
+                    <div class="ring" style="--p:.93">
+                      <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="26"/><circle class="ring-fill" cx="32" cy="32" r="26"/></svg>
+                      <span class="ring-value tabular">93%</span>
+                    </div>
+                    <p class="ring-label">Revenue</p>
+                    <p class="context">$1.86M of $2.0M</p>
+                  </div>
+                  <div class="ring-item pop-chip" style="--i:2">
+                    <div class="ring" style="--p:.96">
+                      <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="26"/><circle class="ring-fill" cx="32" cy="32" r="26"/></svg>
+                      <span class="ring-value tabular">96%</span>
+                    </div>
+                    <p class="ring-label">Reading</p>
+                    <p class="context">72% of 75%</p>
+                  </div>
+                  <div class="ring-item pop-chip" style="--i:3">
+                    <div class="ring ring-warning" style="--p:.77">
+                      <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="26"/><circle class="ring-fill" cx="32" cy="32" r="26"/></svg>
+                      <span class="ring-value tabular">77%</span>
+                    </div>
+                    <p class="ring-label">Math</p>
+                    <p class="context">54% of 70%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Closing CTA -->
+      <section class="section reveal">
+        <div class="card cta-card">
+          <div class="cta-copy">
+            <h2 class="section-title">Every project is built for one organization.</h2>
+            <p class="body-muted">Explore the demo, built on a fictional school with made-up data.</p>
+          </div>
+          <a class="btn btn-primary btn-lg" href="https://demo.edulytical.app">
+            Enter the demo
+            <svg class="icon"><use href="#i-arrow-right"/></svg>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a class="brand" href="#top" aria-label="Edulytical home">
+        <span class="logo logo-xs" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">Edulytical</span>
+      </a>
+      <p class="caption">© <span id="year">2026</span> Edulytical</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
