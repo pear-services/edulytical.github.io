@@ -47,9 +47,9 @@
         <a href="#examples">Examples</a>
       </nav>
       <div class="nav-actions">
-        <a class="btn btn-primary btn-sm" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener">
+        <a class="btn btn-primary btn-sm" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener" data-book>
           <svg class="icon"><use href="#i-calendar"/></svg>
-          Book a call
+          Book an intro call
         </a>
         <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode">
           <svg class="icon icon-moon"><use href="#i-moon"/></svg>
@@ -72,9 +72,9 @@
             Enter the demo
             <svg class="icon"><use href="#i-arrow-right"/></svg>
           </a>
-          <a class="btn btn-secondary btn-lg" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener">
+          <a class="btn btn-secondary btn-lg" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener" data-book>
             <svg class="icon"><use href="#i-calendar"/></svg>
-            Book a walkthrough
+            Book an intro call
           </a>
         </div>
       </div>
@@ -248,12 +248,12 @@
         <div class="card cta-card">
           <div class="cta-copy">
             <h2 class="section-title">Every project is built for one organization.</h2>
-            <p class="body-muted">Explore the demo, built on a fictional school with made-up data, or book a free 15-minute walkthrough to talk about yours.</p>
+            <p class="body-muted">Explore the demo, built on a fictional school with made-up data, or book a free 15-minute intro call to talk about yours.</p>
           </div>
           <div class="cta-actions">
-            <a class="btn btn-secondary btn-lg" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener">
+            <a class="btn btn-secondary btn-lg" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener" data-book>
               <svg class="icon"><use href="#i-calendar"/></svg>
-              Book a walkthrough
+              Book an intro call
             </a>
             <a class="btn btn-primary btn-lg" href="https://demo.edulytical.app">
               Enter the demo
@@ -275,13 +275,27 @@
     </div>
   </footer>
 
+  <!-- Google appointment schedule, opened by any [data-book] link (main.js) -->
+  <dialog class="book-dialog" id="book-dialog" aria-labelledby="book-title" data-src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2q8FBRekGdRtLOiD86fKvivWlchwr0KPYryGJOAGzF51x7z_SzldR3Wv4XWodtLTev9j0oCRfq?gv=true">
+    <div class="book-head">
+      <div>
+        <h2 class="feature-title" id="book-title">Book an intro call</h2>
+        <p class="body-muted">A free 15-minute call to hear about your school and what you'd like to track.</p>
+      </div>
+      <button class="icon-btn" type="button" data-book-close aria-label="Close">
+        <svg class="icon"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <iframe title="Book an intro call" loading="lazy"></iframe>
+  </dialog>
+
   <!-- One-time nudge to book, shown by main.js after a while on the page -->
   <div class="toast" id="book-toast" role="status" aria-live="polite" hidden>
     <svg class="icon toast-icon"><use href="#i-calendar"/></svg>
     <div class="toast-body">
-      <p class="toast-title">Want to see this with your school's numbers?</p>
-      <p class="body-muted">Book a free 15-minute walkthrough and we'll show you what we'd build from your data.</p>
-      <a class="btn btn-primary btn-sm toast-action" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener">Book a walkthrough</a>
+      <p class="toast-title">Got a few minutes to chat?</p>
+      <p class="body-muted">Book a free 15-minute intro call to tell us about your school and what you'd like to track.</p>
+      <a class="btn btn-primary btn-sm toast-action" href="https://calendar.app.google/MWZoXc7GGku5iKsC8" target="_blank" rel="noopener" data-book>Book an intro call</a>
     </div>
     <button class="icon-btn toast-close" type="button" aria-label="Dismiss">
       <svg class="icon"><use href="#i-x"/></svg>
