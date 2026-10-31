@@ -243,3 +243,28 @@
   }, { threshold: 0.6 })
   counts.forEach(function (el) { countObserver.observe(el) })
 })()
+
+// Booking nudge: after 45s with the tab visible, once per browser session.
+;(function () {
+  var toast = document.getElementById('book-toast')
+  if (!toast) return
+  var KEY = 'edulytical-book-toast'
+  try { if (sessionStorage.getItem(KEY)) return } catch (e) {}
+
+  function hide() {
+    toast.classList.remove('show')
+    setTimeout(function () { toast.hidden = true }, 350)
+  }
+  toast.querySelector('.toast-close').addEventListener('click', hide)
+  toast.querySelector('.toast-action').addEventListener('click', hide)
+
+  var visible = 0
+  var timer = setInterval(function () {
+    if (document.visibilityState !== 'visible') return
+    if (++visible < 45) return
+    clearInterval(timer)
+    try { sessionStorage.setItem(KEY, '1') } catch (e) {}
+    toast.hidden = false
+    requestAnimationFrame(function () { requestAnimationFrame(function () { toast.classList.add('show') }) })
+  }, 1000)
+})()
