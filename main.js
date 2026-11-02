@@ -243,3 +243,51 @@
   }, { threshold: 0.6 })
   counts.forEach(function (el) { countObserver.observe(el) })
 })()
+
+// Booking nudge: after 45s with the tab visible, once per browser session.
+;(function () {
+  var toast = document.getElementById('book-toast')
+  if (!toast) return
+  var KEY = 'edulytical-book-toast'
+  try { if (sessionStorage.getItem(KEY)) return } catch (e) {}
+
+  function hide() {
+    toast.classList.remove('show')
+    setTimeout(function () { toast.hidden = true }, 350)
+  }
+  toast.querySelector('.toast-close').addEventListener('click', hide)
+  toast.querySelector('.toast-action').addEventListener('click', hide)
+
+  var visible = 0
+  var timer = setInterval(function () {
+    if (document.visibilityState !== 'visible') return
+    if (++visible < 45) return
+    clearInterval(timer)
+    if (document.documentElement.dataset.booked) return
+    try { sessionStorage.setItem(KEY, '1') } catch (e) {}
+    toast.hidden = false
+    requestAnimationFrame(function () { requestAnimationFrame(function () { toast.classList.add('show') }) })
+  }, 1000)
+})()
+
+// Booking: [data-book] links open the Google appointment schedule in a dialog.
+// Without <dialog> support they fall back to opening it in a new tab.
+;(function () {
+  var dialog = document.getElementById('book-dialog')
+  if (!dialog || typeof dialog.showModal !== 'function') return
+  var frame = dialog.querySelector('iframe')
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('[data-book]')
+    if (!link) return
+    e.preventDefault()
+    document.documentElement.dataset.booked = '1'
+    if (!frame.src) frame.src = dialog.dataset.src
+    var toast = document.getElementById('book-toast')
+    if (toast) toast.querySelector('.toast-close').click()
+    dialog.showModal()
+  })
+  dialog.querySelector('[data-book-close]').addEventListener('click', function () { dialog.close() })
+  // A click on the backdrop lands on the dialog element itself.
+  dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close() })
+})()
